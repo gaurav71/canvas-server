@@ -1,7 +1,16 @@
 import passport from 'passport';
 import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20'
-import { server_url } from './config';
 import User from './schemas/User';
+
+const {
+  HOST,
+  PORT,
+  NODE_ENV,
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET
+} = process.env
+
+const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}`
 
 passport.serializeUser(function(userId, done) {
     console.log('serializeUser',userId)
@@ -13,9 +22,9 @@ passport.deserializeUser(function(userId, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: "88559551316-8ef42u3pakp6bkrautgg867numd2smeu.apps.googleusercontent.com",
-    clientSecret: "1HFECGRiV_WH6WVEBlrm48du",
-    callbackURL: `${server_url}/auth/google/callback`
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL
   },
   async function(accessToken, refreshToken, profile, done) {
     const userId = await createOrCheckUser(profile)

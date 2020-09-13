@@ -14,8 +14,9 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = require("passport-google-oauth20");
-const config_1 = require("./config");
 const User_1 = __importDefault(require("./schemas/User"));
+const { HOST, PORT, NODE_ENV, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}`;
 passport_1.default.serializeUser(function (userId, done) {
     console.log('serializeUser', userId);
     done(null, userId);
@@ -24,9 +25,9 @@ passport_1.default.deserializeUser(function (userId, done) {
     done(null, userId);
 });
 passport_1.default.use(new passport_google_oauth20_1.Strategy({
-    clientID: "88559551316-8ef42u3pakp6bkrautgg867numd2smeu.apps.googleusercontent.com",
-    clientSecret: "1HFECGRiV_WH6WVEBlrm48du",
-    callbackURL: `${config_1.server_url}/auth/google/callback`
+    clientID: GOOGLE_CLIENT_ID,
+    clientSecret: GOOGLE_CLIENT_SECRET,
+    callbackURL
 }, function (accessToken, refreshToken, profile, done) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = yield createOrCheckUser(profile);
