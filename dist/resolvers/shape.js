@@ -120,7 +120,8 @@ let ShapeResolver = class ShapeResolver {
     }
     updateShape(_id, input) {
         return __awaiter(this, void 0, void 0, function* () {
-            const shape = yield Shape_1.default.updateOne({ _id }, Object.assign({}, input));
+            const shape = yield Shape_1.default.findOneAndUpdate({ _id }, Object.assign({}, input)).lean();
+            console.log(shape);
             return shape;
         });
     }

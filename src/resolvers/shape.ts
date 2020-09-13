@@ -85,8 +85,9 @@ export class ShapeResolver {
 
   @Mutation(() => ShapeType)
   async updateShape(@Arg('_id') _id: string, @Arg('input', () => UpdateShapeInput) input: UpdateShapeInput): Promise<ShapeType> {
-    const shape = await Shape.updateOne({ _id }, { ...input })
-    return shape
+    const shape = await Shape.findOneAndUpdate({ _id }, { ...input }).lean()
+    console.log(shape)
+    return shape as ShapeType
   }
 
   @Mutation(() => Boolean)
