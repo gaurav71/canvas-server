@@ -26,6 +26,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 const shape_1 = require("./resolvers/shape");
 const canvas_1 = require("./resolvers/canvas");
 const user_1 = require("./resolvers/user");
+const config_1 = require("./config");
 require('./passport');
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     mongoose_1.default.connect('mongodb+srv://gaurav:helloworld@cluster0.n0ebg.mongodb.net/canvas?retryWrites=true&w=majority', { useNewUrlParser: true });
@@ -36,7 +37,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     });
     const app = express_1.default();
     app.use(cors_1.default({
-        origin: 'http://localhost:8080',
+        origin: config_1.web_url,
         credentials: true
     }));
     const sessionConfig = {
@@ -66,7 +67,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     app.use(passport_1.default.session());
     app.get('/auth/google', passport_1.default.authenticate('google', { scope: ['profile', 'email'] }));
     app.get('/auth/google/callback', passport_1.default.authenticate('google', { failureRedirect: '/failed' }), function (req, res) {
-        res.redirect('http://localhost:8080/');
+        res.redirect(config_1.web_url);
     });
     app.get('/failed', (req, res) => res.send('You Failed to log in!'));
     app.get('/', (req, res) => {
@@ -107,8 +108,8 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     apolloServer.installSubscriptionHandlers(httpServer);
     const PORT = 5000;
     httpServer.listen({ port: PORT }, () => {
-        console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
-        console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}/graphql`);
+        console.log(`🚀 Server ready at ${config_1.server_url}/graphql`);
+        console.log(`🚀 Subscriptions ready at ${config_1.server_url_socket}/graphql`);
     });
 });
 main();

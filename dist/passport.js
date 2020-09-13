@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = require("passport-google-oauth20");
+const config_1 = require("./config");
 const User_1 = __importDefault(require("./schemas/User"));
 passport_1.default.serializeUser(function (userId, done) {
     console.log('serializeUser', userId);
@@ -25,7 +26,7 @@ passport_1.default.deserializeUser(function (userId, done) {
 passport_1.default.use(new passport_google_oauth20_1.Strategy({
     clientID: "88559551316-8ef42u3pakp6bkrautgg867numd2smeu.apps.googleusercontent.com",
     clientSecret: "1HFECGRiV_WH6WVEBlrm48du",
-    callbackURL: "http://localhost:5000/auth/google/callback"
+    callbackURL: `${config_1.server_url}/auth/google/callback`
 }, function (accessToken, refreshToken, profile, done) {
     return __awaiter(this, void 0, void 0, function* () {
         const userId = yield createOrCheckUser(profile);

@@ -15,6 +15,7 @@ import mongoose from 'mongoose';
 import { ShapeResolver } from "./resolvers/shape";
 import { CanvasResolver } from "./resolvers/canvas";
 import { UserResolver } from "./resolvers/user";
+import { server_url, server_url_socket, web_url } from "./config";
 
 require('./passport');
 
@@ -31,7 +32,7 @@ const main = async () => {
   const app = express();
 
   app.use(cors({
-    origin: 'http://localhost:8080',
+    origin: web_url,
     credentials: true
   }))
 
@@ -70,7 +71,7 @@ const main = async () => {
 
   app.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/failed' }),
     function(req, res) {
-      res.redirect('http://localhost:8080/');
+      res.redirect(web_url);
     }
   );
 
@@ -120,8 +121,8 @@ const main = async () => {
   const PORT = 5000
 
   httpServer.listen({ port: PORT }, () => {
-    console.log(`🚀 Server ready at http://localhost:${PORT}/graphql`);
-    console.log(`🚀 Subscriptions ready at ws://localhost:${PORT}/graphql`);
+    console.log(`🚀 Server ready at ${server_url}/graphql`);
+    console.log(`🚀 Subscriptions ready at ${server_url_socket}/graphql`);
   });
 
 }

@@ -1,5 +1,6 @@
 import passport from 'passport';
 import { Profile, Strategy as GoogleStrategy } from 'passport-google-oauth20'
+import { server_url } from './config';
 import User from './schemas/User';
 
 passport.serializeUser(function(userId, done) {
@@ -14,7 +15,7 @@ passport.deserializeUser(function(userId, done) {
 passport.use(new GoogleStrategy({
     clientID: "88559551316-8ef42u3pakp6bkrautgg867numd2smeu.apps.googleusercontent.com",
     clientSecret: "1HFECGRiV_WH6WVEBlrm48du",
-    callbackURL: "http://localhost:5000/auth/google/callback"
+    callbackURL: `${server_url}/auth/google/callback`
   },
   async function(accessToken, refreshToken, profile, done) {
     const userId = await createOrCheckUser(profile)
