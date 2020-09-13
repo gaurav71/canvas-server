@@ -13,9 +13,9 @@ const {
 const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}`
 
 passport.serializeUser(function(userId, done) {
-    console.log('serializeUser',userId)
-    done(null, userId);
-  });
+  console.log('serializeUser',userId)
+  done(null, userId);
+});
   
 passport.deserializeUser(function(userId, done) {
     done(null, userId);

@@ -29,6 +29,7 @@ require('dotenv').config();
 require('./passport');
 const { HOST, PORT, DB, FRONTEND_HOST, } = process.env;
 const a = process.env.NODE_ENV;
+console.log(a);
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
     mongoose_1.default.connect(DB, { useNewUrlParser: true });
     const db = mongoose_1.default.connection;

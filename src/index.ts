@@ -25,8 +25,6 @@ const {
   FRONTEND_HOST,
 } = process.env
 
-const a: string = process.env.NODE_ENV
-
 const main = async () => {
   
   mongoose.connect(DB, {useNewUrlParser: true})
