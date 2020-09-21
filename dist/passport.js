@@ -16,7 +16,7 @@ const passport_1 = __importDefault(require("passport"));
 const passport_google_oauth20_1 = require("passport-google-oauth20");
 const User_1 = __importDefault(require("./schemas/User"));
 const { HOST, PORT, NODE_ENV, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}`;
+const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}/auth/google/callback`;
 passport_1.default.serializeUser(function (userId, done) {
     console.log('serializeUser', userId);
     done(null, userId);

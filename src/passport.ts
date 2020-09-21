@@ -10,10 +10,10 @@ const {
   GOOGLE_CLIENT_SECRET
 } = process.env
 
-const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}`
+const callbackURL = NODE_ENV === 'production' ? `https://${HOST}:${PORT}` : `http://${HOST}:${PORT}/auth/google/callback`
 
 passport.serializeUser(function(userId, done) {
-  console.log('serializeUser',userId)
+  console.log('serializeUser', userId)
   done(null, userId);
 });
   
