@@ -28,8 +28,8 @@ const initializeSocketEvents = (httpServer: Server) => {
 
   const canvasShapeChange = (data: any) => {
     console.log(data)
-    const { attributes, id } = data
-    socket.in(id).emit(events.SHAPE_UPDATED, attributes)
+    const { shape, canvasId } = data
+    socket.to(canvasId).emit(events.SHAPE_UPDATED, shape)
   }
 
 }
